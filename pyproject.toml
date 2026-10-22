@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geoatt-hrtf"
+version = "1.0.0"
+description = "GeoAtt: geometry-aware variable-context HRTF upsampling"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.23,<2.0",
+  "PyYAML>=6.0,<7.0",
+  "torch==2.6.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0,<9.0"]
+data = ["scipy>=1.10,<2.0", "requests>=2.28,<3.0", "sofar>=1.0,<2.0", "tqdm>=4.64,<5.0"]
+
+[project.scripts]
+geoatt-train = "vcfdconformer.train:main"
+geoatt-evaluate = "vcfdconformer.evaluate:main"
+
+[tool.setuptools.packages.find]
+include = ["vcfdconformer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"

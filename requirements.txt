@@ -1,0 +1,4 @@
+# Minimal runtime requirements; pyproject.toml is the source of truth.
+numpy>=1.23,<2.0
+PyYAML>=6.0,<7.0
+torch==2.6.0
