@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import random
+from copy import deepcopy
 from pathlib import Path
 
 import numpy as np
@@ -38,13 +39,16 @@ def save_json(value: dict, path: str | Path) -> None:
 def save_checkpoint(path: str | Path, model, config: dict, stage: str, epoch: int, **metadata) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    public_config = deepcopy(config)
+    public_config["data"]["hrtf_path"] = "data/sonicom/H_log.npy"
+    public_config["data"]["directions_path"] = "data/sonicom/locs.npy"
     torch.save({
         "format_version": 1,
         "architecture": "VCFDConformer-Direct",
         "stage": stage,
         "epoch": epoch,
         "model_state": model.state_dict(),
-        "config": config,
+        "config": public_config,
         **metadata,
     }, path)
 

@@ -9,6 +9,8 @@ logs/
 tmp/
 verification/
 data/
+weights/
+.cache/
 *.npy
 *.npz
 *.pt
