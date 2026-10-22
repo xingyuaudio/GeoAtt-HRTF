@@ -11,8 +11,8 @@ Clone the repository and create a Python 3.10 environment:
 ```bash
 git clone https://github.com/xingyuaudio/GeoAtt-HRTF.git
 cd GeoAtt-HRTF
-conda create -n geoatt-hrtf python=3.10 -y
-conda activate geoatt-hrtf
+conda create --prefix ./.conda/geoatt python=3.10 -y
+conda activate ./.conda/geoatt
 ```
 
 Install a PyTorch 2.6.0 build suitable for your system. For a CUDA 12.4 environment:
