@@ -36,6 +36,30 @@ python tools/download_assets.py
 
 This places the arrays in `data/sonicom/` and the checkpoint in `weights/`. The arrays are derived from the [SONICOM HRTF dataset](https://www.sonicom.eu/); please observe the original dataset terms and attribution requirements.
 
+The default download is pinned to the paper assets in `xingyuchen-8/GeoAtt-HRTF` at
+commit [`afe312913ae2f793939f1484d46e69f0bb70148c`](https://huggingface.co/xingyuchen-8/GeoAtt-HRTF/tree/afe312913ae2f793939f1484d46e69f0bb70148c).
+The following SHA256 values come from the [LFS metadata at that commit](https://huggingface.co/api/models/xingyuchen-8/GeoAtt-HRTF/revision/afe312913ae2f793939f1484d46e69f0bb70148c?blobs=true)
+and were independently checked against the downloaded file bytes on 2026-10-22:
+
+| Hub file | Size (bytes) | SHA256 |
+| --- | ---: | --- |
+| `dataset/H_log.npy` | 134492928 | `c10924b29b33659e5c7dbb08198067c293d03833a5ab0268df85c7bc5bf52e9a` |
+| `dataset/locs.npy` | 1903328 | `d9f0439d35ea332a199624df4028d454062d6395ad65b0223b0c82e3ffbfb621` |
+| `model/geoatt_final_ep440.pt` | 4601400 | `99205b4529c223c4186be370b9939b9a20fd570848d5c3c73ee4849db094d23e` |
+
+Each file is SHA256-checked before replacing its output path. A mismatch stops the
+script with a nonzero exit status, preserves any existing output for that file,
+and reports the cached file to remove before retrying. Files already verified
+and copied earlier in the run remain in place.
+
+To explicitly select another revision, use `--revision <commit-or-tag>` (or
+`--revision main` for the current branch). For another Hub repository, also pass
+`--repo-id <owner/repo> --revision <commit-or-tag>`. An override is resolved once
+to an immutable commit, printed by the script, and used for all three downloads.
+Override files must have the same Hub paths and LFS SHA256 metadata; missing
+metadata is an error. Those checksums come from the selected revision, not the
+paper manifest, so an override does not establish identity with the paper assets.
+
 Option B — generate the arrays from the original SONICOM SOFA files:
 
 ```bash
@@ -45,13 +69,17 @@ python tools/preprocess_sonicom.py --raw-dir data/raw --output-dir data/sonicom
 
 SONICOM download access may be required. Do not reorder the SOFA measurement directions.
 
-Validate either route:
+Check the array structure for either route:
 
 ```bash
 python tools/check_data.py \
   --hrtf-path data/sonicom/H_log.npy \
   --directions-path data/sonicom/locs.npy
 ```
+
+This structural check does not verify file identity or reproduce the paper's
+metrics. SHA256 verification establishes identity with the selected assets;
+metric reproduction requires the evaluation below.
 
 ## Evaluation
 
