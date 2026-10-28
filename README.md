@@ -1,4 +1,4 @@
-# GeoAtt-HRTF
+# HRTF Upsampling Across Varying Measurement Configurations with Geometry-Aware Query-Conditioned Aggregation
 
 Official PyTorch implementation of [*HRTF Upsampling Across Varying Measurement Configurations with Geometry-Aware Query-Conditioned Aggregation*](https://arxiv.org/abs/2609.25995). GeoAtt estimates binaural HRTFs at query directions from a variable-size set of measured directions. The model combines geometry-aware spatial cross-attention with frequency-domain Conformer blocks.
 
